@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        input, select {
+            width: 150px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/jquery.validationEngine.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/languages/jquery.validationEngine-en.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#form1").validationEngine('attach', { promptPosition: "topRight" });
+        });
+
+        function DateFormat(field, rules, i, options) {
+            var regex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+            if (!regex.test(field.val())) {
+                return "Please enter date in dd/MM/yyyy format."
+            }
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Export", "jQuery", FormMethod.Post, new { id = "form1" }))
+    {
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td></td>
+                <td>Please fill the following Form</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Name:</td>
+                <td>@Html.TextBox("txtName", "", new { @class = "validate[required]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Email:</td>
+                <td>@Html.TextBox("txtEmail", "", new { @class = "validate[required,custom[email]]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    @Html.DropDownList("ddlCities", new List<SelectListItem>
+                    {
+                        new SelectListItem{ Text="Please Select", Value="" },
+                        new SelectListItem{ Text="Mumbai", Value="1" },
+                        new SelectListItem{ Text="Delhi", Value="2" },
+                        new SelectListItem{ Text="Kolkatta", Value="3" },
+                        new SelectListItem{ Text="Chennai", Value="4" }
+                    }, new { @class = "validate[required]" })
+                </td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Password:</td>
+                <td>@Html.Password("txtPassword", "", new { @class = "validate[required]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td>@Html.Password("txtConfirmPassword", "", new { @class = "validate[required,equals[txtPassword]]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Mobile Phone Number:</td>
+                <td>@Html.TextBox("txtPhoneNumber", "", new { @class = "validate[required,custom[integer],maxSize[10],minSize[10]]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td>Birth Date (dd/MM/yyyy):</td>
+                <td>@Html.TextBox("txtBirthDate", "", new { @class = "validate[required,funcCall[DateFormat[]]" })</td>
+            </tr>
+            <tr><td style="height: 40px"></td></tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    }
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")*@
+</body>
+</html>
