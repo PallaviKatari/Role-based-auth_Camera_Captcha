@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Role_based_auth.Models
 {
+    /// <summary>
+    /// https://www.google.com/recaptcha/admin/site/669732254/setup
+    /// </summary>
     public class RECaptcha
     {
         public string Key = "6LeeTesnAAAAAGllQtdAYuld_StcjTuQbbgvNrsT";
